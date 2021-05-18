@@ -62,14 +62,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'poll_generator.wsgi.application'
 ASGI_APPLICATION = "poll_generator.asgi.application"
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [config('REDIS_URL', default='redis://localhost:6379')],
-#         },
-#     },
-# }
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [config('REDIS_URL', default='redis://localhost:6379')],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
