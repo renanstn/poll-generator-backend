@@ -1,6 +1,8 @@
 import uuid
 from django.db import models
 from django.db.models.base import Model
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class Poll(models.Model):
@@ -28,3 +30,10 @@ class Option(models.Model):
     def register_vote(self):
         self.votes += 1
         self.save()
+        async_to_sync(get_channel_layer().group_send)(
+            "results_poll_room",
+            {
+                "type": "chat.message",
+                "message": str(self.votes),
+            }
+        )
