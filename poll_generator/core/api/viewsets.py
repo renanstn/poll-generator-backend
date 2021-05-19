@@ -17,6 +17,5 @@ class OptionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['get'])
     def vote(self, request, pk=None):
         option = self.get_object()
-        option.votes += 1
-        option.save()
+        option.register_vote()
         return Response({'message': 'voto registrado'})

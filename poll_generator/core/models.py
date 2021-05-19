@@ -24,3 +24,7 @@ class Option(models.Model):
 
     def __str__(self) -> str:
         return self.description
+
+    def register_vote(self):
+        self.votes += 1
+        self.save()
