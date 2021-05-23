@@ -20,6 +20,7 @@ class PollSerializer(serializers.ModelSerializer):
             'id',
             'active',
             'title',
+            'description',
             'options',
         )
 

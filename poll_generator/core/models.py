@@ -8,6 +8,7 @@ from asgiref.sync import async_to_sync
 class Poll(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     title = models.CharField(max_length=255)
+    description = models.TextField()
     active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
