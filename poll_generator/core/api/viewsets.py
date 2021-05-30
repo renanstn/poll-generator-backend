@@ -18,4 +18,5 @@ class OptionViewSet(viewsets.ModelViewSet):
     def vote(self, request, pk=None):
         option = self.get_object()
         option.register_vote()
+        option.poll.send_status()
         return Response({'message': 'voto registrado'})
