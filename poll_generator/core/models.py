@@ -18,7 +18,11 @@ class Poll(models.Model):
         """
         Obtém os resultados da enquete atual e os envia via websockets.
         """
-        results = {'poll_id': str(self.id), 'options': []}
+        results = {
+            'poll_id': str(self.id),
+            'poll_title': self.title,
+            'options': [],
+        }
         for result in self.options.all():
             results['options'].append({result.description : result.votes})
 
