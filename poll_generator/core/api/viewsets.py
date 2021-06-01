@@ -14,9 +14,9 @@ class OptionViewSet(viewsets.ModelViewSet):
     queryset = models.Option.objects.all()
     serializer_class = serializers.OptionSerializer
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['post'])
     def vote(self, request, pk=None):
         option = self.get_object()
-        option.register_vote()
+        option.register_vote(request.data.get('session_id'))
         option.poll.send_status()
         return Response({'message': 'voto registrado'})

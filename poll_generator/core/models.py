@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models.base import Model
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from django.db.models.constraints import UniqueConstraint
 
 
 class Poll(models.Model):
@@ -48,6 +49,42 @@ class Option(models.Model):
     def __str__(self) -> str:
         return self.description
 
-    def register_vote(self):
+    def register_vote(self, session_id: str):
+        if VotesControl.objects.filter(
+            session_id=session_id,
+            poll=self.poll
+        ).exists():
+            return
         self.votes += 1
         self.save()
+        VotesControl.objects.create(
+            session_id=session_id,
+            poll=self.poll
+        )
+
+
+class VotesControl(models.Model):
+    """
+    Model que faz o controle de "quem votou em quê".
+    Ela garante que cada sessão de usuário possa votar somente uma vez em
+    cada enquete.
+    """
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    session_id = models.CharField(max_length=16)
+    poll = models.ForeignKey(
+        Poll,
+        on_delete=models.CASCADE,
+        related_name='sessions'
+    )
+
+    def __str__(self) -> str:
+        return f"{self.session_id} - {self.poll.title}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['session_id', 'poll'],
+                name="Voto único"
+            )
+        ]
