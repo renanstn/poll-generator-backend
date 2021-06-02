@@ -50,17 +50,24 @@ class Option(models.Model):
         return self.description
 
     def register_vote(self, session_id: str):
+        """
+        Tenta registrar um voto em uma enquete
+        - Retorna False caso o voto já esteja registrado
+        - Retorna True caso esteja tudo ok
+        """
         if VotesControl.objects.filter(
             session_id=session_id,
             poll=self.poll
         ).exists():
-            return
+            return False
+
         self.votes += 1
         self.save()
         VotesControl.objects.create(
             session_id=session_id,
             poll=self.poll
         )
+        return True
 
 
 class VotesControl(models.Model):

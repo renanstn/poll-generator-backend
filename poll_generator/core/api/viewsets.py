@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from core import models
@@ -17,6 +17,12 @@ class OptionViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def vote(self, request, pk=None):
         option = self.get_object()
-        option.register_vote(request.data.get('session_id'))
-        option.poll.send_status()
-        return Response({'message': 'voto registrado'})
+        can_vote = option.register_vote(request.data.get('session_id'))
+        if can_vote:
+            option.poll.send_status()
+            return Response({'message': 'Voto registrado'})
+        else:
+            return Response(
+                {'message': 'Você já votou nessa enquete'},
+                status=status.HTTP_208_ALREADY_REPORTED
+            )
