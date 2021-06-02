@@ -14,6 +14,7 @@ class OptionSerializer(serializers.ModelSerializer):
 
 class PollSerializer(serializers.ModelSerializer):
     options = OptionSerializer(many=True)
+
     class Meta:
         model = models.Poll
         fields = (

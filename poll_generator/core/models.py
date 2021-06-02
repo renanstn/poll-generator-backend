@@ -1,8 +1,6 @@
 import uuid
 from django.db import models
 from django.db.models.base import Model
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 from django.db.models.constraints import UniqueConstraint
 
 
@@ -14,26 +12,6 @@ class Poll(models.Model):
 
     def __str__(self) -> str:
         return self.title
-
-    def send_status(self):
-        """
-        Obtém os resultados da enquete atual e os envia via websockets.
-        """
-        results = {
-            'poll_id': str(self.id),
-            'poll_title': self.title,
-            'options': [],
-        }
-        for result in self.options.all():
-            results['options'].append({result.description : result.votes})
-
-        async_to_sync(get_channel_layer().group_send)(
-            "results_poll_room",
-            {
-                "type": "chat.message",
-                "message": results,
-            }
-        )
 
 
 class Option(models.Model):
@@ -49,24 +27,19 @@ class Option(models.Model):
     def __str__(self) -> str:
         return self.description
 
-    def register_vote(self, session_id: str):
-        """
-        Tenta registrar um voto em uma enquete
-        - Retorna False caso o voto já esteja registrado
-        - Retorna True caso esteja tudo ok
-        """
-        if VotesControl.objects.filter(
+    def check_if_user_can_vote(self, session_id: str):
+        return not VotesControl.objects.filter(
             session_id=session_id,
             poll=self.poll
-        ).exists():
-            return False
+        ).exists()
 
+    def register_vote(self, session_id: str):
         self.votes += 1
         self.save()
-        VotesControl.objects.create(
-            session_id=session_id,
-            poll=self.poll
-        )
+        #VotesControl.objects.create(
+        #    session_id=session_id,
+        #    poll=self.poll
+        #)
         return True
 
 
