@@ -36,10 +36,10 @@ class Option(models.Model):
     def register_vote(self, session_id: str):
         self.votes += 1
         self.save()
-        #VotesControl.objects.create(
-        #    session_id=session_id,
-        #    poll=self.poll
-        #)
+        VotesControl.objects.create(
+            session_id=session_id,
+            poll=self.poll
+        )
         return True
 
 
