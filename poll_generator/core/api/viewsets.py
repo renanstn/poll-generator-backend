@@ -22,6 +22,7 @@ class OptionViewSet(viewsets.ModelViewSet):
         poll_serializer = serializers.PollSerializer(option.poll)
         can_vote = option.check_if_user_can_vote(request.data.get('session_id'))
         # can_vote = True
+
         if can_vote:
             # Registra o voto
             option.register_vote(request.data.get('session_id'))
@@ -33,7 +34,6 @@ class OptionViewSet(viewsets.ModelViewSet):
                     "message": poll_serializer.data,
                 }
             )
-
             return Response(
                 {'message': 'Voto registrado'},
                 status=status.HTTP_200_OK
