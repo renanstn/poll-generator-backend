@@ -8,8 +8,16 @@ from core.api import serializers
 
 
 class PollViewSet(viewsets.ModelViewSet):
-    queryset = models.Poll.objects.filter(active=True)
+    # A queryset é definica dinamicamente de acordo com o query param 'active'
     serializer_class = serializers.PollSerializer
+
+    def get_queryset(self):
+        active_param = self.request.query_params.get('active', False)
+        if active_param:
+            active = True if active_param == '1' else False
+            return models.Poll.objects.filter(active=active)
+        else:
+            return models.Poll.objects.all()
 
 
 class OptionViewSet(viewsets.ModelViewSet):
