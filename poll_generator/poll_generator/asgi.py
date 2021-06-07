@@ -9,6 +9,9 @@ from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from core import routing
 
+
+# Roteia requisições http para a aplicação asgi, e requisições websockets
+# para as URLs do routing
 application = ProtocolTypeRouter({
     "http": django_asgi_app,
     "websocket": AuthMiddlewareStack(

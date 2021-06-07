@@ -4,6 +4,9 @@ from channels.generic.websocket import WebsocketConsumer
 
 
 class Consumer(WebsocketConsumer):
+    """
+    Consumer que lida com toda a parte de websockets da aplicação.
+    """
 
     def connect(self):
         self.room_name = 'poll_room'

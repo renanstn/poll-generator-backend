@@ -68,6 +68,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'poll_generator.wsgi.application'
+
+# Configurações necessárias para o Channels
 ASGI_APPLICATION = "poll_generator.asgi.application"
 CHANNEL_LAYERS = {
     'default': {

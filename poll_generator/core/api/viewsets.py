@@ -8,6 +8,10 @@ from core.api import serializers
 
 
 class PollViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para controle das enquetes.
+    """
+
     # A queryset é definica dinamicamente de acordo com o query param 'active'
     serializer_class = serializers.PollSerializer
 
@@ -21,11 +25,16 @@ class PollViewSet(viewsets.ModelViewSet):
 
 
 class OptionViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet para controle das opções de cada enquete, assim como o
+    recebimento de votos em cada uma.
+    """
+
     queryset = models.Option.objects.all()
     serializer_class = serializers.OptionSerializer
 
     @action(detail=True, methods=['post'])
-    def vote(self, request, pk=None):
+    def vote(self, request, pk=None) -> Response:
         option = self.get_object()
         poll_serializer = serializers.PollSerializer(option.poll)
         can_vote = option.check_if_user_can_vote(request.data.get('session_id'))
