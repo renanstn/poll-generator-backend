@@ -21,6 +21,11 @@ CORS_ALLOW_ALL_ORIGINS = config(
     cast=bool,
     default=False
 )
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS',
+    cast=list,
+    default=[]
+)
 ALLOWED_HOSTS = []
 
 
