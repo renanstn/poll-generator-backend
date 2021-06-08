@@ -74,6 +74,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'poll_generator.wsgi.application'
 
+
+# Configurações do REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+
 # Configurações necessárias para o Channels
 ASGI_APPLICATION = "poll_generator.asgi.application"
 CHANNEL_LAYERS = {

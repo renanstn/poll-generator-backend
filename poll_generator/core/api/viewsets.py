@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from core import models
@@ -14,6 +15,8 @@ class PollViewSet(viewsets.ModelViewSet):
 
     # A queryset é definica dinamicamente de acordo com o query param 'active'
     serializer_class = serializers.PollSerializer
+    # Permissão livre para leitura, mas autenticada para escrita
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         active_param = self.request.query_params.get('active', False)
