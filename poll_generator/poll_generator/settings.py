@@ -23,8 +23,8 @@ CORS_ALLOW_ALL_ORIGINS = config(
 )
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    cast=lambda v: [s.strip() for s in v.split(',')],
-    default=[]
+    cast=lambda value: [origin.strip() for origin in value.split(',')] if value else '',
+    default=''
 )
 ALLOWED_HOSTS = []
 
