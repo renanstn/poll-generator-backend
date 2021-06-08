@@ -13,6 +13,7 @@ Para desenvolver este projeto, utilizei a seguinte stack:
 - [Django](https://www.djangoproject.com/) como base
 - [Django Rest Framework](https://www.django-rest-framework.org/) para agilizar funcionalidades do endpoint da API REST
 - [Django Channels](https://channels.readthedocs.io/en/stable/) para extender o Django e fazer com que ele suporte conexões websockets
+- [Django Rest Framework Simple JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/) para autenticação
 
 Também utilizei uma imagem docker do Redis em ambiente de desenvolvimento.
 
@@ -24,6 +25,7 @@ O projeto atualmente está hospedado e funcional no [Heroku](https://www.heroku.
 - Permite encerrar uma enquete ativa
 - Permite reabrir uma enquete encerrada
 - Permite excluir uma enquete criada
+- Sistema de login e token para ações de criação e edição de enquetes
 - Permite receber votos nas enquetes ativas
 - Faz o controle para que cada usuário vote somente uma vez em cada enquete, através de um código único gerado e armazenado nos cookies
 - Permite vizualizar e acompanhar os resultados das votações em tempo real
