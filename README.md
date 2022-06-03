@@ -18,6 +18,7 @@ fornece os seguintes endpoints:
 ## O que usa
 
 Para desenvolver este projeto, utilizei a seguinte stack:
+
 - [Django](https://www.djangoproject.com/) como base
 - [Django Rest Framework](https://www.django-rest-framework.org/) para agilizar
 funcionalidades do endpoint da API REST
