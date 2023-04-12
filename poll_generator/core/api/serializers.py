@@ -6,9 +6,9 @@ class OptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Option
         fields = (
-            'id',
-            'description',
-            'votes',
+            "id",
+            "description",
+            "votes",
         )
 
 
@@ -18,11 +18,11 @@ class PollSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Poll
         fields = (
-            'id',
-            'active',
-            'title',
-            'description',
-            'options',
+            "id",
+            "active",
+            "title",
+            "description",
+            "options",
         )
 
     def create(self, validated_data):
@@ -30,7 +30,7 @@ class PollSerializer(serializers.ModelSerializer):
         Sempre que precisar salvar no mesmo POST relações de ForeignKey, este
         método deve ser reescrito.
         """
-        options = validated_data.pop('options')
+        options = validated_data.pop("options")
         poll = models.Poll.objects.create(**validated_data)
         for option in options:
             models.Option.objects.create(poll=poll, **option)

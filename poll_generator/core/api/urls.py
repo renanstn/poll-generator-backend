@@ -4,5 +4,5 @@ from core.api import viewsets
 
 router = routers.DefaultRouter()
 
-router.register("polls", viewsets.PollViewSet, basename='polls')
-router.register("options", viewsets.OptionViewSet, basename='options')
+router.register("polls", viewsets.PollViewSet, basename="polls")
+router.register("options", viewsets.OptionViewSet, basename="options")

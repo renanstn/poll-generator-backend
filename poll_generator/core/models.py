@@ -27,9 +27,7 @@ class Option(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     poll = models.ForeignKey(
-        Poll,
-        on_delete=models.CASCADE,
-        related_name='options'
+        Poll, on_delete=models.CASCADE, related_name="options"
     )
     description = models.CharField(max_length=255)
     votes = models.IntegerField(default=0)
@@ -44,8 +42,7 @@ class Option(models.Model):
         VotesControl.
         """
         return not VotesControl.objects.filter(
-            session_id=session_id,
-            poll=self.poll
+            session_id=session_id, poll=self.poll
         ).exists()
 
     def register_vote(self, session_id: str):
@@ -55,10 +52,7 @@ class Option(models.Model):
         """
         self.votes += 1
         self.save()
-        VotesControl.objects.create(
-            session_id=session_id,
-            poll=self.poll
-        )
+        VotesControl.objects.create(session_id=session_id, poll=self.poll)
 
 
 class VotesControl(models.Model):
@@ -71,9 +65,7 @@ class VotesControl(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     session_id = models.CharField(max_length=16)
     poll = models.ForeignKey(
-        Poll,
-        on_delete=models.CASCADE,
-        related_name='sessions'
+        Poll, on_delete=models.CASCADE, related_name="sessions"
     )
 
     def __str__(self) -> str:
@@ -84,7 +76,6 @@ class VotesControl(models.Model):
             # Essa constraint garante que cada par de 'poll' e 'session_id'
             # sejam únicos.
             models.UniqueConstraint(
-                fields=['session_id', 'poll'],
-                name="Voto único"
+                fields=["session_id", "poll"], name="Voto único"
             )
         ]

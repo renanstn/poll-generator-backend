@@ -3,5 +3,5 @@ from core.websocket import consumers
 
 
 websocket_urlpatterns = [
-    path('ws/', consumers.Consumer.as_asgi()),
+    path("ws/", consumers.Consumer.as_asgi()),
 ]
