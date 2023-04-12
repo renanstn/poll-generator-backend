@@ -8,12 +8,12 @@ django = "*"
 djangorestframework = "*"
 python-decouple = "*"
 channels = "*"
-django-heroku = "*"
 channels-redis = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.9"
