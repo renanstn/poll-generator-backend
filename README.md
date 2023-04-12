@@ -29,9 +29,6 @@ para autenticação
 
 Também utilizei uma imagem docker do Redis em ambiente de desenvolvimento.
 
-O projeto atualmente está hospedado e funcional no
-[Heroku](https://www.heroku.com/).
-
 ## Features
 
 - Permite cadastrar enquetes com título, descrição, e N opções de voto
