@@ -1,0 +1,31 @@
+services:
+
+  db:
+    image: postgres:15.3
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+
+  redis:
+    image: redis:7.2
+
+  api:
+    build:
+      context: ./poll_generator
+      target: api
+    volumes:
+      - ./poll_generator:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./poll_generator/.env
+
+  worker:
+    build:
+      context: ./poll_generator
+      target: worker
+    volumes:
+      - ./poll_generator:/app
+    env_file:
+      - ./poll_generator/.env
