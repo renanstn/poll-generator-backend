@@ -39,3 +39,11 @@ Também utilizei uma imagem docker do Redis em ambiente de desenvolvimento.
 - Faz o controle para que cada usuário vote somente uma vez em cada enquete,
 através de um código único gerado e armazenado nos cookies
 - Permite vizualizar e acompanhar os resultados das votações em tempo real
+
+## Desenvolvimento
+
+Suba o backend utilizando docker, com o comando:
+
+```sh
+docker-compose up
+```
