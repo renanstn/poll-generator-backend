@@ -6,7 +6,12 @@ COPY Pipfile* /app/
 RUN pipenv install --dev --system
 
 FROM base AS api
-CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+COPY . /app/
+RUN chmod +x entrypoint.sh
+ENTRYPOINT [ "./entrypoint.sh" ]
+# CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+CMD [ "daphne", "poll_generator.asgi:application", "--bind", "0.0.0.0", "-v2" ]
 
 FROM base AS worker
+COPY . /app/
 CMD [ "python", "manage.py", "runworker", "channels", "--settings=poll_generator.settings" ]

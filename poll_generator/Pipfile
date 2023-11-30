@@ -11,6 +11,7 @@ channels = "*"
 channels-redis = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
+daphne = "*"
 
 [dev-packages]
 black = "*"
